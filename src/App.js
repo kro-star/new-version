@@ -1,24 +1,27 @@
-import logo from './logo.svg';
+import {useState} from 'react';
 import './App.css';
+import ProductList from './components/ProdList/ProdList';
+import ItemField from './components/itemFields/ItemField';
+import { useDispatch } from 'react-redux';
+import { addProduct } from './store/productSlice';
 
 function App() {
+  const [namePr, setNamePr] = useState('');
+  const [price, setPrice] = useState(0);
+
+  const dispatch = useDispatch();
+
+  const addProd = () => {
+    dispatch(addProduct({namePr, price}));
+    setNamePr('');
+    setPrice(0);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ItemField price={price} namePr={namePr} setPrice={setPrice} setNamePr={setNamePr} addProduct={addProd}/>
+      <ProductList setPrice={setPrice} setNamePr={setNamePr} />
+    </>
   );
 }
 
